@@ -10,7 +10,7 @@ namespace net8test.Controllers
         [HttpGet(Name = "test")]
         public async Task<IActionResult> Get()
         {
-            return Ok("Net 8 ok on " + DateTime.Now.ToLongDateString());
+            return Ok("Net 8 ok");
         }
     }
 }
