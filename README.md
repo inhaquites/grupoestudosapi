@@ -1,4 +1,4 @@
-# Planning Poker
+# Grupo Estudos
 
 
 # Instrução para rodar as migrations
@@ -7,5 +7,3 @@
 
 ## atualizar o banco de dados
 - update-database
-
-[![DEV - PokerAPI - CI](https://github.com/inhaquites/pokerapi/actions/workflows/pipe-api-develop.yml/badge.svg)](https://github.com/inhaquites/pokerapi/actions/workflows/pipe-api-develop.yml)
