@@ -1,0 +1,41 @@
+#cria banco sql server
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=So12022016" -v volumeCleanArchDB:/var/lib/sqlserver  -p 1401:1433 -d --name=CleanArchDB2 mcr.microsoft.com/mssql/server:2019-latest
+
+#gerar uma imagem a partir de um Dockerfile (executar na pasta do arquivo)
+docker build -t inhaquites/cleanarchapi:1.33 .
+
+#inspecionar container
+docker inspect <nomecontainer>
+
+#cria uma imagem do container(customizado)
+docker commit <nomecontainer>
+
+#faz login no docker hub
+docker login --username=inhaquites
+
+#sobe a imagem para o docker hub
+docker push <nomeimagem:tag>
+
+#criar uma network no docker
+docker network create <minharede>
+
+#conectar o container na rede criada
+docker network connect <minharede> <nomecontainer>
+
+#inspecionar rede criada (IPs conectados a rede)
+docker network inspect <minharede>
+
+#ver redes criadas
+docker network ls
+
+#criar recurso no kubernetes
+kubectl apply -f <arquivo.yaml>
+
+#visualizar secrets criadas
+kubectl get secrets
+
+#cria secrets no kubernetes
+kubectl create secret generic atendimentos-secrets --from-literal=DefaultConnection='"Data Source=localhost,1401;Initial Catalog=CleanArchDB1;User ID=sa;Password=So12022016"' -n atendimentos
+
+#configurar autoscaling (somente depois de importar a configuracao de metrics)
+kubectl autoscale deployment <NomeDoDeployment> --cpu-percent=60 --min=1 --max=10
