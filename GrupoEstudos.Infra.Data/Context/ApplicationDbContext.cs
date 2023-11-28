@@ -12,6 +12,9 @@ public class ApplicationDbContext : DbContext
     public DbSet<Usuario> Usuarios { get; set; }
     public DbSet<Endereco> Enderecos { get; set; }
     public DbSet<Pessoa> Pessoas { get; set; }
+
+    public DbSet<Estado> Estados { get; set; }
+    public DbSet<Municipio> Municipios { get; set; }
     
 
 

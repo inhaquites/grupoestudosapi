@@ -20,21 +20,13 @@ namespace GrupoEstudos.API.Controllers
             _clientFactory = clientFactory;
         }
 
-        /// <summary>
-        /// Retorna uma tarefa por id.
-        /// </summary>
-        /// <param name="id">Id da tarefa</param>
-        /// <returns>Retorna uma tarefa por id</returns>
-        /// <response code="200">Retorna a tarefa encontrada</response>
-        /// <response code="400">Se o id passado for nulo ou inexistente</response>
+        
         [CustomResponse(StatusCodes.Status200OK)]
         [CustomResponse(StatusCodes.Status400BadRequest)]        
-        [HttpGet]
+        [HttpGet("GetEstados")]
         public async Task<IActionResult> GetEstados(CancellationToken cancellationToken)
-        {           
-
+        {
             var client = _clientFactory.CreateClient();
-
 
             var url = "https://servicodados.ibge.gov.br/api/v1/localidades/estados";
 
@@ -57,8 +49,44 @@ namespace GrupoEstudos.API.Controllers
                 throw new HttpRequestException(response.ReasonPhrase);
             }
 
-            return Ok(result);
+            return ResponseOk(result.OrderBy(x=>x.Sigla));
 
         }
+
+
+        [CustomResponse(StatusCodes.Status200OK)]
+        [CustomResponse(StatusCodes.Status400BadRequest)]
+        [HttpGet("GetMunicipios")]
+        public async Task<IActionResult> GetMunicipios(string uf, CancellationToken cancellationToken)
+        {
+            var client = _clientFactory.CreateClient();
+
+            var url = $"https://servicodados.ibge.gov.br/api/v1/localidades/estados/{uf}/municipios";
+
+            var result = new List<MunicipioDTO>();
+
+            var response = await client.GetAsync(url, cancellationToken);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var stringResponse = await response.Content.ReadAsStringAsync();
+
+                result = System.Text.Json.JsonSerializer.Deserialize<List<MunicipioDTO>>
+                    (stringResponse, new JsonSerializerOptions()
+                    {
+                        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                    });
+            }
+            else
+            {
+                throw new HttpRequestException(response.ReasonPhrase);
+            }
+
+            return ResponseOk(result.OrderBy(x => x.Nome));
+
+        }
+
+
+
     }
 }

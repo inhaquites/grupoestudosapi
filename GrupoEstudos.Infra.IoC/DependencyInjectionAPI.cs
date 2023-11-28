@@ -34,6 +34,15 @@ public static class DependencyInjectionAPI
 
         //Registry Repositories        
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+        services.AddScoped<IPessoaRepository, PessoaRepository>();
+        services.AddScoped<IEnderecoRepository, EnderecoRepository>();
+        services.AddScoped<IEstadoRepository, EstadoRepository>();
+        services.AddScoped<IMunicipioRepository, MunicipioRepository>();
+
+
+
+
         //services.AddScoped<ISalaRepository, SalaRepository>();
         //services.AddScoped<ITarefaRepository, TarefaRepository>();
         //services.AddScoped<IChatRepository, ChatRepository>();
