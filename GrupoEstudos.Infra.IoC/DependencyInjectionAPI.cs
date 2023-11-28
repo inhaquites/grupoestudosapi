@@ -25,11 +25,12 @@ public static class DependencyInjectionAPI
         options.UseMySql(mySqlConnection, 
             ServerVersion.AutoDetect(mySqlConnection))
         );
-        
+
         //if(hostEnvironment.IsProduction())
         //{
         //    services.BuildServiceProvider().GetService<ApplicationDbContext>().Database.Migrate();
         //}
+        services.AddHttpClient();
 
         //Registry Repositories        
         services.AddScoped<IUsuarioRepository, UsuarioRepository>();
